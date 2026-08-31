@@ -5,13 +5,19 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+find_package(Threads REQUIRED)
+
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
 add_library(memory_pool INTERFACE)
 target_include_directories(memory_pool INTERFACE include)
 
 add_executable(memory_pool_benchmark src/main.cpp)
-target_link_libraries(memory_pool_benchmark PRIVATE memory_pool)
+target_link_libraries(memory_pool_benchmark PRIVATE memory_pool Threads::Threads)
 
 enable_testing()
 add_executable(memory_pool_tests tests/test_pool.cpp)
-target_link_libraries(memory_pool_tests PRIVATE memory_pool)
+target_link_libraries(memory_pool_tests PRIVATE memory_pool Threads::Threads)
 add_test(NAME memory_pool_tests COMMAND memory_pool_tests)
