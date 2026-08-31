@@ -13,6 +13,7 @@ int main() {
     assert(pool.contains(first));
     assert(!pool.contains(reinterpret_cast<void*>(0x1)));
     assert(pool.deallocate(first));
+    assert(!pool.deallocate(first));
     assert(pool.allocate() == first);
     assert(pool.deallocate(second));
     return 0;

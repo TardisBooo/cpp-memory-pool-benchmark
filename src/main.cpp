@@ -1,5 +1,6 @@
 #include "memory_pool/fixed_block_pool.hpp"
 
+#include <algorithm>
 #include <atomic>
 #include <chrono>
 #include <cstdlib>

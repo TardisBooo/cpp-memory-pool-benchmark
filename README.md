@@ -14,11 +14,13 @@ ctest --test-dir build --output-on-failure
 ./build/memory_pool_benchmark --threads 4 --iterations 100000
 ```
 
-The pool uses an atomic free-list for fixed-size blocks. The benchmark reports
-successful allocations and failed attempts; it is a teaching baseline, not a
-drop-in production allocator. Compare it with the system allocator on the
-same machine and record compiler, CPU, build mode, block size, and thread
-count.
+The pool uses an atomic free-list for fixed-size blocks and a separate atomic
+ownership bit per block so a repeated release is rejected instead of corrupting
+the free-list. The benchmark reports successful allocations and failed
+attempts; it is a teaching baseline, not a drop-in production allocator. It
+does not replace a production allocator's full ABA, reclamation, alignment, or
+instrumentation strategy. Compare it with the system allocator on the same
+machine and record compiler, CPU, build mode, block size, and thread count.
 
 ## Questions this project makes measurable
 
